@@ -10,6 +10,7 @@ namespace ChainOfResponsibility.Validators
     internal class PasswordValidator : IValidator
     {
         private IValidator _nextValidator;
+
         public void SetNextValidator(IValidator validator)
         {
             _nextValidator = validator;
@@ -19,9 +20,17 @@ namespace ChainOfResponsibility.Validators
         {
             if (String.IsNullOrEmpty(user.Password) || user.Password.Length < 8)
             {
-                Console.WriteLine("пароль не соответствует требуемой длине");
+                Console.WriteLine("Пароль не соответствует требуемой длине");
                 return false;
             }
+
+            if (!user.Password.Any(char.IsUpper) || !user.Password.Any(char.IsLower) ||
+                !user.Password.Any(char.IsDigit) || !user.Password.Any(c => "#*!@".Contains(c)))
+            {
+                Console.WriteLine("Пароль должен содержать хотя бы одну заглавную букву, одну строчную букву, одну цифру и один специальный символ (#, *, !, @).");
+                return false;
+            }
+
             return _nextValidator?.Validate(user) ?? true;
         }
     }

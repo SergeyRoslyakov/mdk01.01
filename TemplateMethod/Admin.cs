@@ -15,12 +15,17 @@ namespace TemplateMethod
 
         public override void SendPicture(string title)
         {
-            Console.WriteLine($"было загружено озображение {title}");
+            Console.WriteLine($"было загружено изображение {title}");
         }
 
         public override void PrintInfo()
         {
             Console.WriteLine($"пользователь {Login} - роль \"АДМИН\"");
+        }
+
+        public override void FileComplaint(User user)
+        {
+            Console.WriteLine($"Админ {Login} подал жалобу на пользователя {user.Login}");
         }
     }
 }

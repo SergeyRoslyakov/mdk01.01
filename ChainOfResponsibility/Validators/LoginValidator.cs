@@ -9,6 +9,7 @@ namespace ChainOfResponsibility.Validators
     internal class LoginValidator : IValidator
     {
         private IValidator _nextValidator;
+
         public void SetNextValidator(IValidator validator)
         {
             _nextValidator = validator;
@@ -16,10 +17,10 @@ namespace ChainOfResponsibility.Validators
 
         public bool Validate(User user)
         {
-            if(String.IsNullOrEmpty(user.Login) || user.Login.Length < 6) 
+            if (String.IsNullOrEmpty(user.Login) || user.Login.Length < 6)
             {
-                Console.WriteLine("логин не удовлетворяет требованиям");
-                return false;   
+                Console.WriteLine("Логин не удовлетворяет требованиям");
+                return false;
             }
 
             return _nextValidator?.Validate(user) ?? true;
